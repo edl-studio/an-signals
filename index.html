@@ -746,10 +746,10 @@ body::before {
         </div>
         <div>
           <div class="threat-title">Home app onboarding drop-off at router pairing step</div>
-          <div class="threat-desc">Session abandonment at the router pairing screen increased 31% following the v2.4.1 release. Amplitude shows users stalling for 90s+ before exiting. Corroborates interview P04's frustration: "I couldn't tell if the app was searching or broken." 6 new App Store reviews this week mention setup failure. Android more affected than iOS (ratio 2.4:1).</div>
+          <div class="threat-desc">Session abandonment at the router pairing screen increased 31% following the v2.4.1 release. PostHog shows users stalling for 90s+ before exiting. Corroborates interview P04's frustration: "I couldn't tell if the app was searching or broken." 6 new App Store reviews this week mention setup failure. Android more affected than iOS (ratio 2.4:1).</div>
         </div>
         <div class="threat-sources">
-          <span class="threat-source">amplitude · home-app</span>
+          <span class="threat-source">posthog · home-app</span>
           <span class="threat-source">dovetail · P04, P11</span>
           <span class="threat-source">app-store · 6 reviews</span>
         </div>
@@ -762,13 +762,13 @@ body::before {
           <div class="threat-severity warning">warning</div>
         </div>
         <div>
-          <div class="threat-title">Field operators raising repeat tickets for network map usability issues</div>
-          <div class="threat-desc">Support tickets tagged "map-unusable" up 34% in the last 3 weeks. Operators in low-connectivity areas report the map view is effectively broken during field visits — forcing them to screenshot previous renders or call NOC for status. 1 in 5 portal support contacts now cite the map experience, making it the top driver of operator dissatisfaction this quarter.</div>
+          <div class="threat-title">Neura-recommended fixes applied by CS dropping week over week at broadband level</div>
+          <div class="threat-desc">Application rate of Neura-suggested fixes by customer success has declined for 4 consecutive weeks — from 74% down to 51% at broadband level. CS agents report the recommendations feel too generic and lack enough context to act on confidently. Unresolved Neura suggestions are correlating with a 19% increase in repeat escalations from the same accounts.</div>
         </div>
         <div class="threat-sources">
-          <span class="threat-source">jira · map-unusable tag</span>
-          <span class="threat-source">dovetail · ops-roundtable</span>
-          <span class="threat-source">csat · field-ops survey</span>
+          <span class="threat-source">neura · recommendation-apply-rate</span>
+          <span class="threat-source">dovetail · CS interviews</span>
+          <span class="threat-source">jira · AXN-1247</span>
         </div>
       </div>
 
@@ -783,7 +783,7 @@ body::before {
           <div class="threat-desc">Push opt-out up 19% over 6 weeks. Exit survey data points to over-notification during planned maintenance windows — users receiving 3–5 alerts per event. Interviews with P02 and P09 confirm: "I turned them off after the third message about the same outage." Risks reducing incident awareness for affected subscribers.</div>
         </div>
         <div class="threat-sources">
-          <span class="threat-source">amplitude · push-events</span>
+          <span class="threat-source">posthog · push-events</span>
           <span class="threat-source">dovetail · P02, P09</span>
         </div>
       </div>
