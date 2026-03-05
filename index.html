@@ -142,9 +142,10 @@ body::before {
   position: relative;
   z-index: 1;
   display: flex;
-  height: 100%;
+  height: calc(100vh - 52px);
   background: var(--border);
   gap: 1px;
+  overflow: hidden;
 }
 
 .main {
@@ -155,6 +156,7 @@ body::before {
   gap: 1px;
   background: var(--border);
   min-width: 0;
+  overflow-y: auto;
 }
 
 .panel {
@@ -214,28 +216,31 @@ body::before {
 }
 
 .threat-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
 }
 
 .threat {
-  display: grid;
-  grid-template-columns: 3px 1fr auto;
-  gap: 1.1rem;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.65rem;
   padding: 1rem 1.1rem;
   background: var(--surface);
-  border-radius: 12px;
+  border-radius: 6px;
   border: 1px solid var(--border);
   cursor: default;
+  border-top: 3px solid transparent;
+  height: 304px;
 }
 
+.threat:has(.threat-bar.critical) { border-top-color: var(--red); }
+.threat:has(.threat-bar.warning) { border-top-color: var(--amber); }
+.threat:has(.threat-bar.info) { border-top-color: var(--accent); }
+
 .threat-bar {
-  width: 3px;
-  height: 100%;
-  min-height: 40px;
-  border-radius: 1.5px;
+  display: none;
 }
 
 .threat-bar.critical { background: var(--red); }
@@ -260,7 +265,7 @@ body::before {
 .threat-sources {
   display: flex;
   gap: 0.35rem;
-  margin-top: 0.55rem;
+  margin-top: auto;
   flex-wrap: wrap;
 }
 
@@ -275,12 +280,9 @@ body::before {
 }
 
 .threat-meta {
-  text-align: right;
-  white-space: nowrap;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.35rem;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .threat-time {
@@ -308,6 +310,7 @@ body::before {
   flex-shrink: 0;
   background: #000;
   overflow-y: auto;
+  height: calc(100vh - 52px);
   scrollbar-width: thin;
   scrollbar-color: var(--border-bright) transparent;
 }
@@ -399,7 +402,7 @@ body::before {
 
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: var(--border);
   border-radius: 12px;
@@ -445,7 +448,7 @@ body::before {
 }
 
 .kpi-value {
-  font-size: 2.1rem;
+  font-size: 2.6rem;
   font-weight: 500;
   letter-spacing: -0.03em;
   line-height: 1;
@@ -528,7 +531,7 @@ body::before {
 }
 
 .bar-track {
-  height: 16px;
+  height: 24px;
   background: var(--surface-2);
   border-radius: 2px;
   overflow: hidden;
@@ -550,26 +553,6 @@ body::before {
   font-size: 0.66rem;
   color: var(--text-muted);
   text-align: right;
-}
-
-.adoption-footer {
-  margin-top: auto;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.adoption-stat {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.adoption-stat-val {
-  font-size: 1.1rem;
-  font-weight: 500;
 }
 
 .adoption-stat-label {
@@ -674,30 +657,40 @@ body::before {
 
 
 @media (max-width: 1100px) {
+  .topbar { padding: 0 1rem; }
+  .topbar-title, .logo-separator { display: none; }
+  .topbar-right > span:last-child { display: none; }
   .dashboard {
     flex-direction: column;
     height: auto;
+    min-height: auto;
   }
   .main {
     grid-template-columns: 1fr 1fr;
+    min-height: auto;
   }
   .research-pulse {
     width: 100%;
     height: auto;
+    max-height: none;
+    overflow-y: visible;
   }
   .kpi-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 700px) {
+  .topbar { padding: 0 0.75rem; }
+  .topbar-right { gap: 1rem; }
   .main {
     grid-template-columns: 1fr;
-    grid-template-rows: auto;
   }
   .threats, .scorecard, .adoption, .design-health {
     grid-column: 1;
+    grid-row: auto;
   }
+  .threat-list { grid-template-columns: 1fr; }
   .kpi-grid { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
@@ -747,51 +740,51 @@ body::before {
 
       <div class="threat">
         <div class="threat-bar critical"></div>
-        <div>
-          <div class="threat-title">Home app onboarding drop-off at router pairing step</div>
-          <div class="threat-desc">Session abandonment at the router pairing screen increased 31% following the v2.4.1 release. Amplitude shows users stalling for 90s+ before exiting. Corroborates interview P04's frustration: "I couldn't tell if the app was searching or broken." 6 new App Store reviews this week mention setup failure. Android more affected than iOS (ratio 2.4:1).</div>
-          <div class="threat-sources">
-            <span class="threat-source">amplitude · home-app</span>
-            <span class="threat-source">dovetail · P04, P11</span>
-            <span class="threat-source">app-store · 6 reviews</span>
-          </div>
-        </div>
         <div class="threat-meta">
           <div class="threat-time">3h ago</div>
           <div class="threat-severity critical">critical</div>
+        </div>
+        <div>
+          <div class="threat-title">Home app onboarding drop-off at router pairing step</div>
+          <div class="threat-desc">Session abandonment at the router pairing screen increased 31% following the v2.4.1 release. Amplitude shows users stalling for 90s+ before exiting. Corroborates interview P04's frustration: "I couldn't tell if the app was searching or broken." 6 new App Store reviews this week mention setup failure. Android more affected than iOS (ratio 2.4:1).</div>
+        </div>
+        <div class="threat-sources">
+          <span class="threat-source">amplitude · home-app</span>
+          <span class="threat-source">dovetail · P04, P11</span>
+          <span class="threat-source">app-store · 6 reviews</span>
         </div>
       </div>
 
       <div class="threat">
         <div class="threat-bar warning"></div>
-        <div>
-          <div class="threat-title">Operator portal map tiles timing out on degraded links</div>
-          <div class="threat-desc">Network topology map fails to render within 5s on connections below 10 Mbps — affecting field operators using mobile tethering. 18% of portal sessions originate from mobile data. Operators are screenshotting the previous render as a workaround. AxonMap component lacks a graceful loading skeleton.</div>
-          <div class="threat-sources">
-            <span class="threat-source">datadog · portal-perf</span>
-            <span class="threat-source">jira · AXN-1182</span>
-            <span class="threat-source">dovetail · ops-roundtable</span>
-          </div>
-        </div>
         <div class="threat-meta">
           <div class="threat-time">9h ago</div>
           <div class="threat-severity warning">warning</div>
+        </div>
+        <div>
+          <div class="threat-title">Operator portal map tiles timing out on degraded links</div>
+          <div class="threat-desc">Network topology map fails to render within 5s on connections below 10 Mbps — affecting field operators using mobile tethering. 18% of portal sessions originate from mobile data. Operators are screenshotting the previous render as a workaround. AxonMap component lacks a graceful loading skeleton.</div>
+        </div>
+        <div class="threat-sources">
+          <span class="threat-source">datadog · portal-perf</span>
+          <span class="threat-source">jira · AXN-1182</span>
+          <span class="threat-source">dovetail · ops-roundtable</span>
         </div>
       </div>
 
       <div class="threat">
         <div class="threat-bar info"></div>
-        <div>
-          <div class="threat-title">Push notification opt-out rate increasing among home users</div>
-          <div class="threat-desc">Push opt-out up 19% over 6 weeks. Exit survey data points to over-notification during planned maintenance windows — users receiving 3–5 alerts per event. Interviews with P02 and P09 confirm: "I turned them off after the third message about the same outage." Risks reducing incident awareness for affected subscribers.</div>
-          <div class="threat-sources">
-            <span class="threat-source">amplitude · push-events</span>
-            <span class="threat-source">dovetail · P02, P09</span>
-          </div>
-        </div>
         <div class="threat-meta">
           <div class="threat-time">1d ago</div>
           <div class="threat-severity info">signal</div>
+        </div>
+        <div>
+          <div class="threat-title">Push notification opt-out rate increasing among home users</div>
+          <div class="threat-desc">Push opt-out up 19% over 6 weeks. Exit survey data points to over-notification during planned maintenance windows — users receiving 3–5 alerts per event. Interviews with P02 and P09 confirm: "I turned them off after the third message about the same outage." Risks reducing incident awareness for affected subscribers.</div>
+        </div>
+        <div class="threat-sources">
+          <span class="threat-source">amplitude · push-events</span>
+          <span class="threat-source">dovetail · P02, P09</span>
         </div>
       </div>
 
@@ -845,6 +838,14 @@ body::before {
           <span class="kpi-target">Target: 45m</span>
         </div>
       </div>
+      <div class="kpi">
+        <div class="kpi-header"><span class="kpi-dot operator"></span><span class="kpi-label">SLA reports auto-generated</span></div>
+        <div class="kpi-value amber">44%</div>
+        <div class="kpi-footer">
+          <span class="kpi-trend up">↑ 9% from baseline</span>
+          <span class="kpi-target">Target: 80%</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -889,20 +890,6 @@ body::before {
         <div class="bar-label">AxonChart</div>
         <div class="bar-track"><div class="bar-fill red" style="width:31%"></div></div>
         <div class="bar-value">31%</div>
-      </div>
-    </div>
-    <div class="adoption-footer">
-      <div class="adoption-stat">
-        <div class="adoption-stat-val" style="color:var(--green)">+22</div>
-        <div class="adoption-stat-label">Components migrated<br>this sprint</div>
-      </div>
-      <div class="adoption-stat">
-        <div class="adoption-stat-val" style="color:var(--red)">37</div>
-        <div class="adoption-stat-label">Custom overrides<br>remaining</div>
-      </div>
-      <div class="adoption-stat">
-        <div class="adoption-stat-val" style="color:var(--amber)">4</div>
-        <div class="adoption-stat-label">Deprecated in<br>production</div>
       </div>
     </div>
   </div>
